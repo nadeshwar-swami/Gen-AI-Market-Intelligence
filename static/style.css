@@ -418,6 +418,7 @@ body::after {
 
 .tool-header {
   margin-bottom: 2.5rem;
+  animation: fadeInDown 0.6s ease both;
 }
 
 .tool-tag {
@@ -430,6 +431,7 @@ body::after {
   font-weight: 600;
   color: var(--accent-cyan);
   margin-bottom: 1rem;
+  animation: fadeInUp 0.6s ease 0.1s both;
 }
 
 .tool-title {
@@ -438,11 +440,13 @@ body::after {
   font-weight: 800;
   letter-spacing: -0.04em;
   margin-bottom: 0.6rem;
+  animation: fadeInUp 0.6s ease 0.2s both;
 }
 
 .tool-subtitle {
   color: var(--text-secondary);
   font-size: 0.95rem;
+  animation: fadeInUp 0.6s ease 0.3s both;
 }
 
 /* ── Form Card ── */
@@ -452,6 +456,7 @@ body::after {
   border-radius: var(--radius-xl);
   padding: 2.5rem;
   margin-bottom: 2rem;
+  animation: fadeInUp 0.6s ease 0.4s both;
 }
 
 .form-group {
@@ -1056,6 +1061,7 @@ body::after {
   text-align: center;
   max-width: 480px;
   margin: 0 auto;
+  animation: fadeInUp 0.6s ease both;
 }
 .gate-card h3 {
   font-family: var(--font-display);
@@ -1075,6 +1081,7 @@ body::after {
   padding: 1.5rem;
   margin-bottom: 1rem;
   transition: border-color 0.2s;
+  animation: fadeInUp 0.6s ease both;
 }
 .history-card:hover { border-color: rgba(255,255,255,0.12); }
 
