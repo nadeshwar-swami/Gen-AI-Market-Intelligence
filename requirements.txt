@@ -1,0 +1,11 @@
+Flask
+Flask-CORS
+Pillow
+opencv-python
+groq
+python-dotenv
+Werkzeug
+supabase
+gotrue
+PyJWT
+requests
