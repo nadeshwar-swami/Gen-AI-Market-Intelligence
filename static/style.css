@@ -191,6 +191,14 @@ body::after {
   padding-top: 64px;
 }
 
+.page-section {
+  display: none;
+}
+
+.page-section.active {
+  display: block;
+}
+
 /* ============================================
    HERO SECTION
    ============================================ */
