@@ -168,38 +168,13 @@
 
     <div class="section-divider"></div>
 
-    <div class="features-grid">
-      <a href="#" class="feature-card" onclick="gotoTool('campaign');return false;" style="--card-gradient:var(--gradient-blue);">
-        <div class="card-icon blue">📣</div>
-        <div class="card-title">Campaign Generator</div>
-        <p class="card-desc">Create data-driven marketing campaigns tailored to your specific audience and platform with AI-powered insights.</p>
-        <span class="card-arrow">Generate Campaign →</span>
-      </a>
-      <a href="#" class="feature-card" onclick="gotoTool('pitch');return false;" style="--card-gradient:var(--gradient-violet);">
-        <div class="card-icon violet">🎯</div>
-        <div class="card-title">Sales Pitch Creator</div>
-        <p class="card-desc">Craft compelling, personalized sales pitches that resonate with your target customers and drive conversions.</p>
-        <span class="card-arrow" style="color:var(--accent-violet);">Create Pitch →</span>
-      </a>
-      <a href="#" class="feature-card" onclick="gotoTool('lead');return false;" style="--card-gradient:var(--gradient-emerald);">
-        <div class="card-icon emerald">⭐</div>
-        <div class="card-title">Lead Qualifier</div>
-        <p class="card-desc">Identify and prioritize high-value leads using intelligent scoring to maximize your sales efficiency and ROI.</p>
-        <span class="card-arrow" style="color:var(--accent-emerald);">Score Lead →</span>
-      </a>
-    </div>
-
-    <div class="platforms-section">
-      <p class="section-label">Supported Platforms</p>
-      <div class="platforms-grid">
-        <div class="platform-pill">💼 LinkedIn</div>
-        <div class="platform-pill">📘 Facebook</div>
-        <div class="platform-pill">📸 Instagram</div>
-        <div class="platform-pill">🐦 Twitter/X</div>
-        <div class="platform-pill">▶️ YouTube</div>
-        <div class="platform-pill">✉️ Email</div>
-        <div class="platform-pill">🎵 TikTok</div>
-        <div class="platform-pill">💬 WhatsApp</div>
+    <div style="text-align:center;padding:4rem 2rem;color:var(--text-secondary);">
+      <p style="font-size:1.1rem;margin-bottom:1.5rem;">Select a tool from the navigation to get started</p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a href="#" onclick="showPage('campaign');return false;" class="hero-cta hero-cta-outline">📣 Campaign</a>
+        <a href="#" onclick="showPage('pitch');return false;" class="hero-cta hero-cta-outline">🎯 Pitch</a>
+        <a href="#" onclick="showPage('lead');return false;" class="hero-cta hero-cta-outline">⭐ Lead Score</a>
+        <a href="#" onclick="showPage('history');return false;" class="hero-cta hero-cta-outline">🕘 History</a>
       </div>
     </div>
   </div><!-- /home -->
