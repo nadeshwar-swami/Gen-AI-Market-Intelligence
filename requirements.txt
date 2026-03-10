@@ -5,3 +5,7 @@ opencv-python
 groq
 python-dotenv
 Werkzeug
+supabase
+gotrue
+PyJWT
+requests
