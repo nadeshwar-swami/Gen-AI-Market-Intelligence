@@ -418,7 +418,6 @@ body::after {
 
 .tool-header {
   margin-bottom: 2.5rem;
-  animation: fadeInDown 0.6s ease both;
 }
 
 .tool-tag {
@@ -431,7 +430,6 @@ body::after {
   font-weight: 600;
   color: var(--accent-cyan);
   margin-bottom: 1rem;
-  animation: fadeInUp 0.6s ease 0.1s both;
 }
 
 .tool-title {
@@ -440,13 +438,11 @@ body::after {
   font-weight: 800;
   letter-spacing: -0.04em;
   margin-bottom: 0.6rem;
-  animation: fadeInUp 0.6s ease 0.2s both;
 }
 
 .tool-subtitle {
   color: var(--text-secondary);
   font-size: 0.95rem;
-  animation: fadeInUp 0.6s ease 0.3s both;
 }
 
 /* ── Form Card ── */
@@ -736,6 +732,27 @@ body::after {
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-20px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Animation Utility Classes ── */
+.animate-fade-in-down {
+  animation: fadeInDown 0.6s ease both;
+}
+
+.animate-fade-in-up-1 {
+  animation: fadeInUp 0.6s ease 0.1s both;
+}
+
+.animate-fade-in-up-2 {
+  animation: fadeInUp 0.6s ease 0.2s both;
+}
+
+.animate-fade-in-up-3 {
+  animation: fadeInUp 0.6s ease 0.3s both;
+}
+
+.animate-fade-in-up-4 {
+  animation: fadeInUp 0.6s ease 0.4s both;
 }
 
 /* ============================================

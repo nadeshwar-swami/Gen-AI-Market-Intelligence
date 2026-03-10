@@ -699,7 +699,28 @@ async function saveProfile() {
 function showPage(page) {
   document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(el => el.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
+  
+  const activePage = document.getElementById('page-' + page);
+  activePage.classList.add('active');
+  
+  // Apply animations to tool page elements
+  setTimeout(() => {
+    const header = activePage.querySelector('.tool-header');
+    if (header) header.classList.add('animate-fade-in-down');
+    
+    const tag = activePage.querySelector('.tool-tag');
+    if (tag) tag.classList.add('animate-fade-in-up-1');
+    
+    const title = activePage.querySelector('.tool-title');
+    if (title) title.classList.add('animate-fade-in-up-2');
+    
+    const subtitle = activePage.querySelector('.tool-subtitle');
+    if (subtitle) subtitle.classList.add('animate-fade-in-up-3');
+    
+    const formCard = activePage.querySelector('.form-card');
+    if (formCard) formCard.classList.add('animate-fade-in-up-4');
+  }, 10);
+  
   const navEl = document.getElementById('nav-' + page);
   if (navEl) navEl.classList.add('active');
   window.scrollTo({ top:0, behavior:'smooth' });
