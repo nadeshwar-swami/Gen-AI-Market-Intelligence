@@ -171,17 +171,6 @@ body::after {
   font-weight: 600;
 }
 
-.nav-links a.active::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 14px;
-  right: 14px;
-  height: 2px;
-  background: var(--accent-blue);
-  border-radius: 1px;
-}
-
 /* ============================================
    MAIN LAYOUT
    ============================================ */
