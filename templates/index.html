@@ -1,21 +1,21 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MarketAI Suite — AI-Powered Sales & Marketing</title>
+  <title>MarketAI Suite  AI-Powered Sales & Marketing</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 </head>
 <body>
 
-<!-- ╔══════════════════════════════════════════╗
-     ║         AUTH MODAL (login/signup)        ║
-     ╚══════════════════════════════════════════╝ -->
+<!-- 
+              AUTH MODAL (login/signup)        
+      -->
 <div class="modal-overlay" id="auth-modal" style="display:none;">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeAuthModal()">✕</button>
+    <button class="modal-close" onclick="closeAuthModal()"></button>
 
     <!-- Tabs -->
     <div class="modal-tabs">
@@ -33,12 +33,12 @@
       </div>
       <div class="auth-form-group">
         <label class="form-label">Password</label>
-        <input type="password" id="login-password" class="form-input" placeholder="••••••••"
+        <input type="password" id="login-password" class="form-input" placeholder=""
           onkeydown="if(event.key==='Enter') doLogin()" />
       </div>
       <div class="auth-error" id="login-error"></div>
       <button class="btn-primary btn-full" onclick="doLogin()" id="login-btn">
-        Sign In →
+        Sign In 
       </button>
       <div class="auth-divider"><span>or</span></div>
       <button class="btn-google btn-full" onclick="doGoogleSignIn()" id="google-login-btn">
@@ -62,12 +62,12 @@
       </div>
       <div class="auth-form-group">
         <label class="form-label">Password <span style="color:var(--text-muted);font-weight:400;">(min 6 chars)</span></label>
-        <input type="password" id="signup-password" class="form-input" placeholder="••••••••"
+        <input type="password" id="signup-password" class="form-input" placeholder=""
           onkeydown="if(event.key==='Enter') doSignup()" />
       </div>
       <div class="auth-error" id="signup-error"></div>
       <button class="btn-primary btn-full" onclick="doSignup()" id="signup-btn">
-        Create Account →
+        Create Account 
       </button>
       <div class="auth-divider"><span>or</span></div>
       <button class="btn-google btn-full" onclick="doGoogleSignIn()" id="google-signup-btn">
@@ -79,12 +79,12 @@
   </div>
 </div>
 
-<!-- ╔══════════════════════════════════════════╗
-     ║           PROFILE MODAL                  ║
-     ╚══════════════════════════════════════════╝ -->
+<!-- 
+                PROFILE MODAL                  
+      -->
 <div class="modal-overlay" id="profile-modal" style="display:none;">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeProfileModal()">✕</button>
+    <button class="modal-close" onclick="closeProfileModal()"></button>
     <h2 class="modal-title">Your Profile</h2>
     <p class="modal-sub" id="profile-email-display"></p>
     <div class="auth-form-group">
@@ -103,20 +103,20 @@
   </div>
 </div>
 
-<!-- ╔══════════════════════════════════════════╗
-     ║               NAVIGATION                 ║
-     ╚══════════════════════════════════════════╝ -->
+<!-- 
+                    NAVIGATION                 
+      -->
 <nav class="navbar">
   <a href="#" class="nav-brand" onclick="showPage('home');return false;">
-    <div class="nav-logo">📈</div>
     <span class="nav-title">Market<span>AI</span> Suite</span>
   </a>
   <ul class="nav-links">
-    <li><a href="#" id="nav-home"     class="active" onclick="showPage('home');return false;">🏠 Home</a></li>
-    <li><a href="#" id="nav-campaign"            onclick="gotoTool('campaign');return false;">📣 Campaign</a></li>
-    <li><a href="#" id="nav-pitch"               onclick="gotoTool('pitch');return false;">🎯 Pitch</a></li>
-    <li><a href="#" id="nav-lead"                onclick="gotoTool('lead');return false;">⭐ Lead Score</a></li>
-    <li><a href="#" id="nav-history"             onclick="gotoTool('history');return false;">🕘 History</a></li>
+    <li><a href="#" id="nav-home"     class="active" onclick="showPage('home');return false;"> Home</a></li>
+    <li><a href="#" id="nav-campaign"            onclick="gotoTool('campaign');return false;"> Campaign</a></li>
+    <li><a href="#" id="nav-creative"            onclick="gotoTool('creative');return false;"> Creative</a></li>
+    <li><a href="#" id="nav-pitch"               onclick="gotoTool('pitch');return false;"> Pitch</a></li>
+    <li><a href="#" id="nav-lead"                onclick="gotoTool('lead');return false;"> Lead Score</a></li>
+    <li><a href="#" id="nav-history"             onclick="gotoTool('history');return false;"> History</a></li>
   </ul>
   <!-- Auth area -->
   <div class="nav-auth">
@@ -135,11 +135,14 @@
 
 <div class="page-wrapper">
 
-  <!-- ╔══════════════════════════════════════════╗
-       ║               HOME PAGE                  ║
-       ╚══════════════════════════════════════════╝ -->
+  <!-- 
+                      HOME PAGE                  
+        -->
   <div id="page-home" class="page-section active">
     <section class="hero">
+      <div class="hero-globe-wrap" aria-hidden="true">
+        <canvas id="hero-globe-canvas" class="hero-globe-canvas"></canvas>
+      </div>
       <div class="hero-badge">
         <div class="hero-badge-dot"></div>
         Powered by Groq LLaMA 3.3 70B
@@ -151,10 +154,10 @@
       </h1>
       <p class="hero-subtitle">
         Generate high-performing campaigns, craft compelling pitches, and qualify leads
-        with advanced AI — all in seconds. Sign in to save your history.
+        with advanced AI  all in seconds. Sign in to save your history.
       </p>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a href="#" class="hero-cta" onclick="gotoTool('campaign');return false;">Get Started Free →</a>
+        <a href="#" class="hero-cta" onclick="gotoTool('campaign');return false;">Get Started Free </a>
         <a href="#" class="hero-cta hero-cta-outline" id="hero-login-btn"
            onclick="openAuthModal('signup');return false;" style="display:none;">Create Account</a>
       </div>
@@ -168,31 +171,296 @@
 
     <div class="section-divider"></div>
 
-    <div style="text-align:center;padding:4rem 2rem;color:var(--text-secondary);">
-      <p style="font-size:1.1rem;margin-bottom:1.5rem;">Select a tool from the navigation to get started</p>
-      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a href="#" onclick="showPage('campaign');return false;" class="hero-cta hero-cta-outline">📣 Campaign</a>
-        <a href="#" onclick="showPage('pitch');return false;" class="hero-cta hero-cta-outline">🎯 Pitch</a>
-        <a href="#" onclick="showPage('lead');return false;" class="hero-cta hero-cta-outline">⭐ Lead Score</a>
-        <a href="#" onclick="showPage('history');return false;" class="hero-cta hero-cta-outline">🕘 History</a>
-      </div>
+    <section class="platforms-section" style="padding-top:0;">
+      <div class="section-label">About The Project</div>
+      <p style="max-width:920px;margin:0 auto;color:var(--text-secondary);font-size:1rem;line-height:1.8;">
+        MarketAI Suite is an end-to-end AI workspace for sales and marketing teams. It combines strategy generation,
+        sales enablement, lead qualification, and creative production in one authenticated platform, with every output
+        persisted to user history for auditability and reuse.
+      </p>
+    </section>
+
+    <div class="features-grid" style="padding-top:1.5rem;grid-template-columns:1fr;">
+      <article class="feature-card" style="--card-gradient: var(--gradient-blue); cursor:default;">
+        <div class="card-icon blue">01</div>
+        <div class="feature-card-row">
+          <div class="feature-copy">
+            <h3 class="card-title">Unified AI Workflow</h3>
+            <p class="card-desc">Run campaign planning, pitch writing, lead scoring, and creative generation from a single interface and shared account context.</p>
+          </div>
+          <div class="feature-visual" aria-hidden="true">
+            <svg viewBox="0 0 200 160" class="feature-svg">
+              <defs>
+                <clipPath id="deployClip">
+                  <rect x="30" y="20" width="140" height="120" rx="4" />
+                </clipPath>
+              </defs>
+              <rect x="30" y="20" width="140" height="120" rx="4" fill="none" stroke="currentColor" stroke-width="2" />
+              <g clip-path="url(#deployClip)">
+                <rect x="40" y="35" width="120" height="10" rx="2" fill="currentColor" opacity="0.15">
+                  <animate attributeName="opacity" values="0.15;0.8;0.15" dur="2s" begin="0s" repeatCount="indefinite" />
+                  <animate attributeName="width" values="20;120;20" dur="2s" begin="0s" repeatCount="indefinite" />
+                </rect>
+                <rect x="40" y="51" width="120" height="10" rx="2" fill="currentColor" opacity="0.15">
+                  <animate attributeName="opacity" values="0.15;0.8;0.15" dur="2s" begin="0.15s" repeatCount="indefinite" />
+                  <animate attributeName="width" values="20;120;20" dur="2s" begin="0.15s" repeatCount="indefinite" />
+                </rect>
+                <rect x="40" y="67" width="120" height="10" rx="2" fill="currentColor" opacity="0.15">
+                  <animate attributeName="opacity" values="0.15;0.8;0.15" dur="2s" begin="0.3s" repeatCount="indefinite" />
+                  <animate attributeName="width" values="20;120;20" dur="2s" begin="0.3s" repeatCount="indefinite" />
+                </rect>
+                <rect x="40" y="83" width="120" height="10" rx="2" fill="currentColor" opacity="0.15">
+                  <animate attributeName="opacity" values="0.15;0.8;0.15" dur="2s" begin="0.45s" repeatCount="indefinite" />
+                  <animate attributeName="width" values="20;120;20" dur="2s" begin="0.45s" repeatCount="indefinite" />
+                </rect>
+                <rect x="40" y="99" width="120" height="10" rx="2" fill="currentColor" opacity="0.15">
+                  <animate attributeName="opacity" values="0.15;0.8;0.15" dur="2s" begin="0.6s" repeatCount="indefinite" />
+                  <animate attributeName="width" values="20;120;20" dur="2s" begin="0.6s" repeatCount="indefinite" />
+                </rect>
+              </g>
+            </svg>
+          </div>
+        </div>
+        <span class="card-arrow">Cross-tool continuity</span>
+      </article>
+
+      <article class="feature-card" style="--card-gradient: var(--gradient-violet); cursor:default;">
+        <div class="card-icon violet">02</div>
+        <div class="feature-card-row">
+          <div class="feature-copy">
+            <h3 class="card-title">Creative Automation</h3>
+            <p class="card-desc">Generate visual prompts with Groq, produce banner assets with Stability AI, and create short ad videos through PiAPI pipeline orchestration.</p>
+          </div>
+          <div class="feature-visual" aria-hidden="true">
+            <svg viewBox="0 0 200 160" class="feature-svg">
+              <circle cx="100" cy="80" r="12" fill="currentColor">
+                <animate attributeName="r" values="12;14;12" dur="2s" repeatCount="indefinite" />
+              </circle>
+              <line x1="100" y1="80" x2="145" y2="80" stroke="currentColor" stroke-width="1" opacity="0.3">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" begin="0s" repeatCount="indefinite" />
+              </line>
+              <line x1="100" y1="80" x2="122" y2="42" stroke="currentColor" stroke-width="1" opacity="0.3">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" begin="0.3s" repeatCount="indefinite" />
+              </line>
+              <line x1="100" y1="80" x2="78" y2="42" stroke="currentColor" stroke-width="1" opacity="0.3">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" begin="0.6s" repeatCount="indefinite" />
+              </line>
+              <line x1="100" y1="80" x2="55" y2="80" stroke="currentColor" stroke-width="1" opacity="0.3">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" begin="0.9s" repeatCount="indefinite" />
+              </line>
+              <line x1="100" y1="80" x2="78" y2="118" stroke="currentColor" stroke-width="1" opacity="0.3">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" begin="1.2s" repeatCount="indefinite" />
+              </line>
+              <line x1="100" y1="80" x2="122" y2="118" stroke="currentColor" stroke-width="1" opacity="0.3">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur="2s" begin="1.5s" repeatCount="indefinite" />
+              </line>
+              <circle cx="145" cy="80" r="6" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="122" cy="42" r="6" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="78" cy="42" r="6" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="55" cy="80" r="6" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="78" cy="118" r="6" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="122" cy="118" r="6" fill="none" stroke="currentColor" stroke-width="2" />
+              <circle cx="100" cy="80" r="20" fill="none" stroke="currentColor" stroke-width="1" opacity="0.2">
+                <animate attributeName="r" values="20;60" dur="2s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0.5;0" dur="2s" repeatCount="indefinite" />
+              </circle>
+            </svg>
+          </div>
+        </div>
+        <span class="card-arrow">Image + video pipeline</span>
+      </article>
+
+      <article class="feature-card" style="--card-gradient: var(--gradient-emerald); cursor:default;">
+        <div class="card-icon emerald">03</div>
+        <div class="feature-card-row">
+          <div class="feature-copy">
+            <h3 class="card-title">Secure User Accounts</h3>
+            <p class="card-desc">Supabase authentication, profile storage, and user-scoped history ensure each team member accesses only their own generated outputs.</p>
+          </div>
+          <div class="feature-visual" aria-hidden="true">
+            <svg viewBox="0 0 200 160" class="feature-svg">
+              <path d="M 100 20 L 150 40 L 150 90 Q 150 130 100 145 Q 50 130 50 90 L 50 40 Z" fill="none" stroke="currentColor" stroke-width="2" />
+              <path d="M 100 35 L 135 50 L 135 85 Q 135 115 100 128 Q 65 115 65 85 L 65 50 Z" fill="currentColor" opacity="0.1">
+                <animate attributeName="opacity" values="0.1;0.2;0.1" dur="2s" repeatCount="indefinite" />
+              </path>
+              <rect x="85" y="70" width="30" height="25" rx="3" fill="currentColor" />
+              <path d="M 90 70 L 90 60 Q 90 50 100 50 Q 110 50 110 60 L 110 70" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+              <circle cx="100" cy="80" r="4" fill="#fff" />
+              <rect x="98" y="82" width="4" height="8" fill="#fff" />
+              <line x1="60" y1="60" x2="140" y2="60" stroke="currentColor" stroke-width="1" opacity="0">
+                <animate attributeName="y1" values="40;120;40" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="y2" values="40;120;40" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="opacity" values="0;0.5;0" dur="3s" repeatCount="indefinite" />
+              </line>
+            </svg>
+          </div>
+        </div>
+        <span class="card-arrow">Account-level data isolation</span>
+      </article>
     </div>
+
+    <section class="infra-section">
+      <div class="infra-grid">
+        <div class="infra-copy">
+          <span class="infra-kicker">
+            <span class="infra-kicker-line"></span>
+            AI Infrastructure
+          </span>
+          <h2 class="infra-title">
+            Powered by
+            <br />
+            industry leaders.
+          </h2>
+          <p class="infra-desc">
+            MarketAI Suite leverages best-in-class AI models to deliver professional-grade marketing content.
+            From strategy to creative execution, our infrastructure combines speed, quality, and reliability.
+          </p>
+          <div class="infra-stats">
+            <div class="infra-stat">
+              <div class="infra-stat-value">70B</div>
+              <div class="infra-stat-label">Model parameters</div>
+            </div>
+            <div class="infra-stat">
+              <div class="infra-stat-value">~5s</div>
+              <div class="infra-stat-label">Text generation</div>
+            </div>
+            <div class="infra-stat">
+              <div class="infra-stat-value">16:9</div>
+              <div class="infra-stat-label">Creative output</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="infra-panel" aria-hidden="true">
+          <div class="infra-panel-head">
+            <span class="infra-panel-title">AI Models & Performance</span>
+            <span class="infra-status">
+              <span class="infra-status-dot"></span>
+              All operational
+            </span>
+          </div>
+          <div class="infra-list">
+            <div class="infra-row">
+              <div class="infra-loc"><span class="infra-dot"></span>Groq LLaMA 3.3 <small>Text Generation</small></div>
+              <span class="infra-latency">2-5s</span>
+            </div>
+            <div class="infra-row">
+              <div class="infra-loc"><span class="infra-dot"></span>Stability AI Core <small>Image Creation</small></div>
+              <span class="infra-latency">10-15s</span>
+            </div>
+            <div class="infra-row">
+              <div class="infra-loc"><span class="infra-dot"></span>Luma Dream Machine <small>Video Generation</small></div>
+              <span class="infra-latency">60-90s</span>
+            </div>
+            <div class="infra-row">
+              <div class="infra-loc"><span class="infra-dot"></span>Campaign Strategy <small>AI-Powered</small></div>
+              <span class="infra-latency">3-6s</span>
+            </div>
+            <div class="infra-row">
+              <div class="infra-loc"><span class="infra-dot"></span>Pitch Deck Builder <small>Dynamic Content</small></div>
+              <span class="infra-latency">4-7s</span>
+            </div>
+          </div>
+          <div class="infra-wave" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="home-footer">
+      <div class="footer-wave" aria-hidden="true"></div>
+      
+      <div class="footer-container">
+        <div class="footer-main">
+          <div class="footer-grid">
+            <!-- Brand Column -->
+            <div class="footer-brand">
+              <a href="#home" class="footer-logo">
+                <span class="footer-logo-text">MarketAI Suite</span>
+                <span class="footer-logo-tm">TM</span>
+              </a>
+              <p class="footer-tagline">
+                The platform for marketing teams who ship. Generate, deploy, and scale campaigns with AI-powered velocity.
+              </p>
+              <!-- Social Links -->
+              <div class="footer-social">
+                <a href="#" class="footer-social-link">Twitter</a>
+                <a href="#" class="footer-social-link">GitHub</a>
+                <a href="#" class="footer-social-link">LinkedIn</a>
+              </div>
+            </div>
+
+            <!-- Product Links -->
+            <div class="footer-column">
+              <h3 class="footer-column-title">Product</h3>
+              <ul class="footer-links">
+                <li><a href="#page-home" class="footer-link">Features</a></li>
+                <li><a href="#page-campaign" class="footer-link">Campaign Generator</a></li>
+                <li><a href="#page-creative" class="footer-link">Creative Studio</a></li>
+                <li><a href="#page-pitch" class="footer-link">Pitch Deck</a></li>
+              </ul>
+            </div>
+
+            <!-- Tools Links -->
+            <div class="footer-column">
+              <h3 class="footer-column-title">Tools</h3>
+              <ul class="footer-links">
+                <li><a href="#page-lead" class="footer-link">Lead Scoring</a></li>
+                <li><a href="#page-history" class="footer-link">History</a></li>
+                <li><a href="#" class="footer-link">API Access</a></li>
+                <li><a href="#" class="footer-link">Integrations</a></li>
+              </ul>
+            </div>
+
+            <!-- Company Links -->
+            <div class="footer-column">
+              <h3 class="footer-column-title">Company</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">About</a></li>
+                <li><a href="#" class="footer-link">Blog</a></li>
+                <li><a href="#" class="footer-link">Careers</a></li>
+                <li><a href="#" class="footer-link">Contact</a></li>
+              </ul>
+            </div>
+
+            <!-- Legal Links -->
+            <div class="footer-column">
+              <h3 class="footer-column-title">Legal</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Privacy</a></li>
+                <li><a href="#" class="footer-link">Terms</a></li>
+                <li><a href="#" class="footer-link">Security</a></li>
+                <li><a href="#" class="footer-link">Compliance</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="footer-bottom">
+          <p class="footer-copyright">2025 MarketAI Suite. All rights reserved.</p>
+          <div class="footer-status">
+            <span class="footer-status-dot"></span>
+            All systems operational
+          </div>
+        </div>
+      </div>
+    </footer>
   </div><!-- /home -->
 
 
-  <!-- ╔══════════════════════════════════════════╗
-       ║          CAMPAIGN GENERATOR              ║
-       ╚══════════════════════════════════════════╝ -->
+  <!-- 
+                 CAMPAIGN GENERATOR              
+        -->
   <div id="page-campaign" class="page-section">
     <div class="tool-page">
       <div class="tool-header">
-        <div class="tool-tag">📣 AI Tool</div>
+        <div class="tool-tag"> AI Tool</div>
         <h1 class="tool-title">Campaign Generator</h1>
         <p class="tool-subtitle">Create data-driven marketing campaigns tailored to your audience</p>
       </div>
       <div class="auth-gate" id="gate-campaign" style="display:none;">
         <div class="gate-card">
-          <div style="font-size:2.5rem;margin-bottom:1rem;">🔒</div>
+          <div style="font-size:2.5rem;margin-bottom:1rem;"></div>
           <h3>Sign in to generate campaigns</h3>
           <p>Create a free account to use all AI tools and save your history.</p>
           <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;">
@@ -218,15 +486,15 @@
           <div style="margin-top:1.75rem;">
             <div class="loading-state" id="campaign-loading"><div class="spinner"></div><span>Generating your campaign strategy...</span></div>
             <div class="form-actions" id="campaign-actions">
-              <button class="btn-primary" onclick="generateCampaign()">✨ Generate Campaign</button>
-              <button class="btn-secondary" onclick="clearForm('campaign')">✕ Clear</button>
+              <button class="btn-primary" onclick="generateCampaign()"> Generate Campaign</button>
+              <button class="btn-secondary" onclick="clearForm('campaign')"> Clear</button>
             </div>
           </div>
         </div>
         <div class="result-card" id="campaign-result">
           <div class="result-header">
-            <span class="result-title">📊 Your Campaign Strategy</span>
-            <button class="copy-btn" onclick="copyResult('campaign-output')">📋 Copy</button>
+            <span class="result-title"> Your Campaign Strategy</span>
+            <button class="copy-btn" onclick="copyResult('campaign-output')"> Copy</button>
           </div>
           <div class="result-body" id="campaign-output"></div>
         </div>
@@ -235,19 +503,19 @@
   </div><!-- /campaign -->
 
 
-  <!-- ╔══════════════════════════════════════════╗
-       ║          SALES PITCH CREATOR             ║
-       ╚══════════════════════════════════════════╝ -->
+  <!-- 
+                 SALES PITCH CREATOR             
+        -->
   <div id="page-pitch" class="page-section">
     <div class="tool-page pitch">
       <div class="tool-header">
-        <div class="tool-tag">🎯 AI Tool</div>
+        <div class="tool-tag"> AI Tool</div>
         <h1 class="tool-title">Sales Pitch Creator</h1>
         <p class="tool-subtitle">Craft compelling, personalized sales pitches for your target customers</p>
       </div>
       <div class="auth-gate" id="gate-pitch" style="display:none;">
         <div class="gate-card">
-          <div style="font-size:2.5rem;margin-bottom:1rem;">🔒</div>
+          <div style="font-size:2.5rem;margin-bottom:1rem;"></div>
           <h3>Sign in to create pitches</h3>
           <p>Create a free account to use all AI tools and save your history.</p>
           <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;">
@@ -269,15 +537,15 @@
           <div style="margin-top:1.75rem;">
             <div class="loading-state" id="pitch-loading"><div class="spinner"></div><span>Crafting your personalized pitch...</span></div>
             <div class="form-actions" id="pitch-actions">
-              <button class="btn-primary" onclick="generatePitch()">🎯 Generate Pitch</button>
-              <button class="btn-secondary" onclick="clearForm('pitch')">✕ Clear</button>
+              <button class="btn-primary" onclick="generatePitch()"> Generate Pitch</button>
+              <button class="btn-secondary" onclick="clearForm('pitch')"> Clear</button>
             </div>
           </div>
         </div>
         <div class="result-card" id="pitch-result">
           <div class="result-header">
-            <span class="result-title">💼 Your Sales Pitch</span>
-            <button class="copy-btn" onclick="copyResult('pitch-output')">📋 Copy</button>
+            <span class="result-title"> Your Sales Pitch</span>
+            <button class="copy-btn" onclick="copyResult('pitch-output')"> Copy</button>
           </div>
           <div class="result-body" id="pitch-output"></div>
         </div>
@@ -286,19 +554,19 @@
   </div><!-- /pitch -->
 
 
-  <!-- ╔══════════════════════════════════════════╗
-       ║           LEAD QUALIFIER                 ║
-       ╚══════════════════════════════════════════╝ -->
+  <!-- 
+                  LEAD QUALIFIER                 
+        -->
   <div id="page-lead" class="page-section">
     <div class="tool-page lead">
       <div class="tool-header">
-        <div class="tool-tag">⭐ AI Tool</div>
+        <div class="tool-tag"> AI Tool</div>
         <h1 class="tool-title">Lead Qualifier</h1>
-        <p class="tool-subtitle">Identify and prioritize high-value leads with AI-powered scoring (0–100)</p>
+        <p class="tool-subtitle">Identify and prioritize high-value leads with AI-powered scoring (0100)</p>
       </div>
       <div class="auth-gate" id="gate-lead" style="display:none;">
         <div class="gate-card">
-          <div style="font-size:2.5rem;margin-bottom:1rem;">🔒</div>
+          <div style="font-size:2.5rem;margin-bottom:1rem;"></div>
           <h3>Sign in to score leads</h3>
           <p>Create a free account to use all AI tools and save your history.</p>
           <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;">
@@ -328,16 +596,16 @@
           <div style="margin-top:1.75rem;">
             <div class="loading-state" id="lead-loading"><div class="spinner"></div><span>Analyzing lead qualification...</span></div>
             <div class="form-actions" id="lead-actions">
-              <button class="btn-primary" onclick="scoreLead()">⭐ Score Lead</button>
-              <button class="btn-secondary" onclick="clearForm('lead')">✕ Clear</button>
+              <button class="btn-primary" onclick="scoreLead()"> Score Lead</button>
+              <button class="btn-secondary" onclick="clearForm('lead')"> Clear</button>
             </div>
           </div>
           <p style="color:var(--text-muted);font-size:0.8rem;margin-top:1rem;">Scores help prioritize your sales efforts and maximize efficiency</p>
         </div>
         <div class="result-card" id="lead-result">
           <div class="result-header">
-            <span class="result-title">📊 Lead Qualification Analysis</span>
-            <button class="copy-btn" onclick="copyResult('lead-output')">📋 Copy</button>
+            <span class="result-title"> Lead Qualification Analysis</span>
+            <button class="copy-btn" onclick="copyResult('lead-output')"> Copy</button>
           </div>
           <div class="result-body" id="lead-output"></div>
         </div>
@@ -346,32 +614,98 @@
   </div><!-- /lead -->
 
 
-  <!-- ╔══════════════════════════════════════════╗
-       ║              HISTORY PAGE                ║
-       ╚══════════════════════════════════════════╝ -->
+  <!-- 
+                   CREATIVE STUDIO               
+        -->
+  <div id="page-creative" class="page-section">
+    <div class="tool-page creative">
+      <div class="tool-header">
+        <div class="tool-tag"> AI Tool</div>
+        <h1 class="tool-title">Creative Studio</h1>
+        <p class="tool-subtitle">Auto-generate banner prompts with Groq, create ad images with Stability, then render 5-second video ads with Luma</p>
+      </div>
+
+      <div class="auth-gate" id="gate-creative" style="display:none;">
+        <div class="gate-card">
+          <div style="font-size:2.5rem;margin-bottom:1rem;"></div>
+          <h3>Sign in to use Creative Studio</h3>
+          <p>Create a free account to generate visual assets and save them to your history.</p>
+          <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;">
+            <button class="btn-primary" onclick="openAuthModal('signup')">Create Account</button>
+            <button class="btn-secondary" onclick="openAuthModal('login')">Sign In</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tool-creative">
+        <div class="form-card">
+          <div class="form-group">
+            <label class="form-label">Brand / Product Name</label>
+            <input type="text" id="creative-brand" class="form-input" placeholder="e.g., VoltSpark Energy Drink" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Campaign Tone</label>
+            <input type="text" id="creative-tone" class="form-input" placeholder="e.g., bold, playful, premium, professional" />
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label">Platform</label>
+            <input type="text" id="creative-platform" class="form-input" placeholder="e.g., Instagram, LinkedIn, YouTube" />
+          </div>
+
+          <div style="margin-top:1.75rem;">
+            <div class="loading-state" id="creative-loading"><div class="spinner"></div><span>Generating your creative assets...</span></div>
+            <div class="form-actions" id="creative-actions">
+              <button class="btn-primary" onclick="generateCreativeImage()"> Generate Banner</button>
+              <button class="btn-secondary" onclick="generateCreativeVideo()"> Generate 5s Video Ad</button>
+              <button class="btn-secondary" onclick="clearForm('creative')"> Clear</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="result-card" id="creative-result">
+          <div class="result-header">
+            <span class="result-title"> Creative Studio Output</span>
+            <button class="copy-btn" onclick="copyResult('creative-output')"> Copy Prompt</button>
+          </div>
+          <div class="result-body" id="creative-output"></div>
+          <div class="creative-preview-wrap" id="creative-preview-wrap" style="display:none;">
+            <img id="creative-image-preview" class="creative-image-preview" alt="Generated banner" style="display:none;" />
+            <video id="creative-video-preview" class="creative-video-preview" controls playsinline style="display:none;"></video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /creative -->
+
+
+  <!-- 
+                     HISTORY PAGE                
+        -->
   <div id="page-history" class="page-section">
     <div class="tool-page">
       <div class="tool-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
         <div>
-          <div class="tool-tag">🕘 Your History</div>
+          <div class="tool-tag"> Your History</div>
           <h1 class="tool-title">AI Output History</h1>
           <p class="tool-subtitle">Browse, review, and reload past results</p>
         </div>
         <div style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center;">
           <select id="history-filter" class="form-input" style="width:auto;padding:8px 14px;font-size:0.85rem;" onchange="loadHistory()">
             <option value="">All Tools</option>
-            <option value="campaign">📣 Campaign</option>
-            <option value="pitch">🎯 Pitch</option>
-            <option value="lead_score">⭐ Lead Score</option>
+            <option value="campaign"> Campaign</option>
+            <option value="pitch"> Pitch</option>
+            <option value="lead_score"> Lead Score</option>
+            <option value="image_banner"> Image Banner</option>
+            <option value="video_ad"> Video Ad</option>
           </select>
-          <button class="btn-secondary" onclick="loadHistory()" style="padding:8px 16px;font-size:0.85rem;">🔄 Refresh</button>
-          <button class="btn-danger" onclick="clearAllHistory()" style="padding:8px 16px;font-size:0.85rem;">🗑️ Clear All</button>
+          <button class="btn-secondary" onclick="loadHistory()" style="padding:8px 16px;font-size:0.85rem;"> Refresh</button>
+          <button class="btn-danger" onclick="clearAllHistory()" style="padding:8px 16px;font-size:0.85rem;"> Clear All</button>
         </div>
       </div>
 
       <div class="auth-gate" id="gate-history">
         <div class="gate-card">
-          <div style="font-size:2.5rem;margin-bottom:1rem;">🔒</div>
+          <div style="font-size:2.5rem;margin-bottom:1rem;"></div>
           <h3>Sign in to view history</h3>
           <p>Your AI-generated results are saved to your account automatically.</p>
           <div style="display:flex;gap:1rem;justify-content:center;margin-top:1.5rem;">
@@ -386,8 +720,8 @@
           <div class="spinner"></div><span>Loading your history...</span>
         </div>
         <div id="history-empty" style="display:none;text-align:center;padding:4rem 2rem;color:var(--text-muted);">
-          <div style="font-size:3rem;margin-bottom:1rem;">📭</div>
-          <p style="font-size:1rem;">No history yet. Generate your first campaign, pitch, or lead score!</p>
+          <div style="font-size:3rem;margin-bottom:1rem;"></div>
+          <p style="font-size:1rem;">No history yet. Generate your first campaign, pitch, lead score, or creative asset!</p>
         </div>
         <div id="history-list"></div>
       </div>
@@ -430,6 +764,11 @@ initSupabase();
    STATE
    ============================================================ */
 let currentUser = null;
+let creativeState = {
+  prompt: '',
+  imageUrl: '',
+  videoUrl: ''
+};
 
 /* ============================================================
    AUTH MODAL
@@ -463,7 +802,7 @@ function showAuthError(elId, msg) {
   el.style.display = 'block';
 }
 
-/* ── Login ── */
+/*  Login  */
 async function doLogin() {
   const email    = document.getElementById('login-email').value.trim();
   const password = document.getElementById('login-password').value;
@@ -485,11 +824,11 @@ async function doLogin() {
   } catch(e) {
     showAuthError('login-error', 'Network error. Please try again.');
   } finally {
-    btn.disabled = false; btn.textContent = 'Sign In →';
+    btn.disabled = false; btn.textContent = 'Sign In ';
   }
 }
 
-/* ── Signup ── */
+/*  Signup  */
 async function doSignup() {
   const full_name = document.getElementById('signup-name').value.trim();
   const email     = document.getElementById('signup-email').value.trim();
@@ -505,23 +844,23 @@ async function doSignup() {
     const data = await res.json();
     if (!res.ok) { showAuthError('signup-error', data.error); return; }
     if (data.confirm_email) {
-      showAuthError('signup-error', '✅ ' + data.message);
+      showAuthError('signup-error', ' ' + data.message);
       document.getElementById('signup-error').style.color = 'var(--accent-emerald)';
       return;
     }
     currentUser = data.user;
     closeAuthModal();
     updateAuthUI();
-    showToast('Account created! Welcome to MarketAI Suite 🎉');
+    showToast('Account created! Welcome to MarketAI Suite ');
     refreshGates();
   } catch(e) {
     showAuthError('signup-error', 'Network error. Please try again.');
   } finally {
-    btn.disabled = false; btn.textContent = 'Create Account →';
+    btn.disabled = false; btn.textContent = 'Create Account ';
   }
 }
 
-/* ── Google OAuth using Supabase JS SDK ── */
+/*  Google OAuth using Supabase JS SDK  */
 async function doGoogleSignIn() {
   clearAuthErrors();
   if (!supabaseClient) {
@@ -551,7 +890,7 @@ async function doGoogleSignIn() {
   }
 }
 
-/* ── Logout ── */
+/*  Logout  */
 async function doLogout() {
   try {
     await fetch('/auth/logout', { method:'POST', credentials:'include' });
@@ -564,7 +903,7 @@ async function doLogout() {
   refreshGates();
 }
 
-/* ── Check session on load ── */
+/*  Check session on load  */
 async function checkAuth() {
   try {
     const res  = await fetch('/auth/me', { credentials:'include' });
@@ -589,7 +928,7 @@ function handleAuthRedirectStatus() {
   const error = params.get('auth_error');
   
   if (error) {
-    showToast('Sign in failed: ' + error, '⚠️');
+    showToast('Sign in failed: ' + error, '');
   } else if (isComplete) {
     showToast('Signed in with Google successfully!');
     // Sync Supabase SDK session to server and refetch user
@@ -625,6 +964,80 @@ function handleAuthRedirectStatus() {
   window.history.replaceState({}, document.title, cleanUrl);
 }
 
+function initHeroGlobe() {
+  const canvas = document.getElementById('hero-globe-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  const chars = '.:-=+*#%@';
+  let frameId = null;
+  let time = 0;
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+    canvas.height = Math.max(1, Math.floor(rect.height * dpr));
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function render() {
+    const rect = canvas.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    if (width < 10 || height < 10) {
+      frameId = requestAnimationFrame(render);
+      return;
+    }
+
+    ctx.clearRect(0, 0, width, height);
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.min(width, height) * 0.42;
+    const points = [];
+
+    ctx.font = '12px monospace';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    for (let phi = 0; phi < Math.PI * 2; phi += 0.16) {
+      for (let theta = 0; theta < Math.PI; theta += 0.16) {
+        const x = Math.sin(theta) * Math.cos(phi + time * 0.5);
+        const y = Math.sin(theta) * Math.sin(phi + time * 0.5);
+        const z = Math.cos(theta);
+
+        const rotY = time * 0.32;
+        const x1 = x * Math.cos(rotY) - z * Math.sin(rotY);
+        const z1 = x * Math.sin(rotY) + z * Math.cos(rotY);
+
+        const rotX = time * 0.2;
+        const y1 = y * Math.cos(rotX) - z1 * Math.sin(rotX);
+        const z2 = y * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+        const depth = (z2 + 1) / 2;
+        const charIndex = Math.max(0, Math.min(chars.length - 1, Math.floor(depth * (chars.length - 1))));
+        points.push({ x: centerX + x1 * radius, y: centerY + y1 * radius, z: z2, ch: chars[charIndex] });
+      }
+    }
+
+    points.sort((a, b) => a.z - b.z);
+    points.forEach((point) => {
+      const alpha = 0.12 + (point.z + 1) * 0.34;
+      ctx.fillStyle = `rgba(30, 28, 24, ${Math.min(alpha, 0.82)})`;
+      ctx.fillText(point.ch, point.x, point.y);
+    });
+
+    time += 0.018;
+    frameId = requestAnimationFrame(render);
+  }
+
+  resize();
+  render();
+  window.addEventListener('resize', resize);
+}
+
 function updateAuthUI() {
   const isLoggedIn = !!currentUser;
   document.getElementById('auth-guest').style.display = isLoggedIn ? 'none'  : 'flex';
@@ -638,7 +1051,7 @@ function updateAuthUI() {
 }
 
 function refreshGates() {
-  const tools = ['campaign','pitch','lead','history'];
+  const tools = ['campaign','creative','pitch','lead','history'];
   tools.forEach(t => {
     const gate = document.getElementById('gate-' + t);
     const tool = document.getElementById('tool-' + t);
@@ -734,7 +1147,7 @@ function gotoTool(tool) {
 /* ============================================================
    TOAST
    ============================================================ */
-function showToast(message, emoji = '✅') {
+function showToast(message, emoji = '') {
   const toast = document.getElementById('toast');
   toast.innerHTML = `${emoji} ${message}`;
   toast.classList.add('show');
@@ -764,6 +1177,16 @@ function clearForm(prefix) {
     .forEach(el => el.value = '');
   const r = document.getElementById(prefix + '-result');
   if (r) r.classList.remove('show');
+
+  if (prefix === 'creative') {
+    creativeState = { prompt: '', imageUrl: '', videoUrl: '' };
+    const wrap = document.getElementById('creative-preview-wrap');
+    const img = document.getElementById('creative-image-preview');
+    const video = document.getElementById('creative-video-preview');
+    if (wrap) wrap.style.display = 'none';
+    if (img) { img.style.display = 'none'; img.removeAttribute('src'); }
+    if (video) { video.style.display = 'none'; video.removeAttribute('src'); }
+  }
 }
 
 function copyResult(outputId) {
@@ -771,7 +1194,7 @@ function copyResult(outputId) {
   if (!text) return;
   navigator.clipboard.writeText(text)
     .then(() => showToast('Copied to clipboard!'))
-    .catch(() => showToast('Please select and copy manually', '⚠️'));
+    .catch(() => showToast('Please select and copy manually', ''));
 }
 
 /* ============================================================
@@ -783,13 +1206,13 @@ async function callAI(endpoint, formData, prefix) {
   document.getElementById(prefix + '-result').classList.remove('show');
   try {
     const res  = await fetch(endpoint, { method:'POST', body:formData, credentials:'include' });
-    if (res.status === 401) { openAuthModal('login'); showToast('Please sign in first', '⚠️'); return; }
+    if (res.status === 401) { openAuthModal('login'); showToast('Please sign in first', ''); return; }
     const data = await res.json();
     showResult(prefix, data.result);
     showToast('Generated successfully!');
     if (document.getElementById('page-history').classList.contains('active')) loadHistory();
   } catch(e) {
-    showResult(prefix, '❌ Network error. Please check your connection and try again.');
+    showResult(prefix, ' Network error. Please check your connection and try again.');
   } finally {
     setLoading(prefix, false);
   }
@@ -799,7 +1222,7 @@ function generateCampaign() {
   const p = document.getElementById('campaign-product').value.trim();
   const a = document.getElementById('campaign-audience').value.trim();
   const pl = document.getElementById('campaign-platform').value.trim();
-  if (!p || !a || !pl) { showToast('Please fill in all fields', '⚠️'); return; }
+  if (!p || !a || !pl) { showToast('Please fill in all fields', ''); return; }
   const fd = new FormData();
   fd.append('product', p); fd.append('audience', a); fd.append('platform', pl);
   callAI('/generate_campaign', fd, 'campaign');
@@ -808,7 +1231,7 @@ function generateCampaign() {
 function generatePitch() {
   const p = document.getElementById('pitch-product').value.trim();
   const c = document.getElementById('pitch-customer').value.trim();
-  if (!p || !c) { showToast('Please fill in all fields', '⚠️'); return; }
+  if (!p || !c) { showToast('Please fill in all fields', ''); return; }
   const fd = new FormData();
   fd.append('product', p); fd.append('customer', c);
   callAI('/generate_pitch', fd, 'pitch');
@@ -819,19 +1242,120 @@ function scoreLead() {
   const b = document.getElementById('lead-budget').value.trim();
   const ne = document.getElementById('lead-need').value.trim();
   const u = document.getElementById('lead-urgency').value.trim();
-  if (!n || !b || !ne || !u) { showToast('Please fill in all fields', '⚠️'); return; }
+  if (!n || !b || !ne || !u) { showToast('Please fill in all fields', ''); return; }
   const fd = new FormData();
   fd.append('name', n); fd.append('budget', b); fd.append('need', ne); fd.append('urgency', u);
   callAI('/lead_score', fd, 'lead');
+}
+
+function renderCreativeOutput(data) {
+  const lines = [];
+  if (data.prompt) lines.push('Visual Prompt:\n' + data.prompt);
+  if (data.image_url) lines.push('Image URL:\n' + data.image_url);
+  if (data.video_url) lines.push('Video URL:\n' + data.video_url);
+  showResult('creative', lines.join('\n\n'));
+
+  const wrap = document.getElementById('creative-preview-wrap');
+  const img = document.getElementById('creative-image-preview');
+  const video = document.getElementById('creative-video-preview');
+
+  if (data.image_url) {
+    img.src = data.image_url;
+    img.style.display = 'block';
+  }
+  if (data.video_url) {
+    video.src = data.video_url;
+    video.style.display = 'block';
+  }
+  if (wrap && (data.image_url || data.video_url)) {
+    wrap.style.display = 'grid';
+  }
+}
+
+async function generateCreativeImage() {
+  if (!currentUser) { openAuthModal('login'); return; }
+
+  const brand = document.getElementById('creative-brand').value.trim();
+  const tone = document.getElementById('creative-tone').value.trim();
+  const platform = document.getElementById('creative-platform').value.trim();
+  if (!brand || !tone || !platform) { showToast('Please fill in all fields', ''); return; }
+
+  const fd = new FormData();
+  fd.append('brand_name', brand);
+  fd.append('campaign_tone', tone);
+  fd.append('platform', platform);
+
+  setLoading('creative', true);
+  document.getElementById('creative-result').classList.remove('show');
+  try {
+    const res = await fetch('/generate_image', { method:'POST', body:fd, credentials:'include' });
+    const data = await res.json();
+    if (!res.ok) {
+      showResult('creative', ' ' + (data.error || 'Image generation failed.'));
+      return;
+    }
+
+    creativeState.prompt = data.prompt || '';
+    creativeState.imageUrl = data.image_url || '';
+    renderCreativeOutput(data);
+    showToast('Banner generated successfully!');
+
+    if (document.getElementById('page-history').classList.contains('active')) loadHistory();
+  } catch (e) {
+    showResult('creative', ' Network error. Please check your connection and try again.');
+  } finally {
+    setLoading('creative', false);
+  }
+}
+
+async function generateCreativeVideo() {
+  if (!currentUser) { openAuthModal('login'); return; }
+
+  const brand = document.getElementById('creative-brand').value.trim();
+  const tone = document.getElementById('creative-tone').value.trim();
+  const platform = document.getElementById('creative-platform').value.trim();
+  if (!brand || !tone || !platform) { showToast('Please fill in all fields', ''); return; }
+
+  const fd = new FormData();
+  fd.append('brand_name', brand);
+  fd.append('campaign_tone', tone);
+  fd.append('platform', platform);
+  if (creativeState.imageUrl) fd.append('image_url', creativeState.imageUrl);
+  if (creativeState.prompt) fd.append('visual_prompt', creativeState.prompt);
+
+  setLoading('creative', true);
+  document.getElementById('creative-result').classList.remove('show');
+  try {
+    const res = await fetch('/generate_video', { method:'POST', body:fd, credentials:'include' });
+    const data = await res.json();
+    if (!res.ok) {
+      showResult('creative', ' ' + (data.error || 'Video generation failed.'));
+      return;
+    }
+
+    creativeState.prompt = data.prompt || creativeState.prompt;
+    creativeState.imageUrl = data.image_url || creativeState.imageUrl;
+    creativeState.videoUrl = data.video_url || '';
+    renderCreativeOutput(data);
+    showToast('Video ad generated successfully!');
+
+    if (document.getElementById('page-history').classList.contains('active')) loadHistory();
+  } catch (e) {
+    showResult('creative', ' Network error. Please check your connection and try again.');
+  } finally {
+    setLoading('creative', false);
+  }
 }
 
 /* ============================================================
    HISTORY
    ============================================================ */
 const TOOL_META = {
-  campaign:   { icon:'📣', label:'Campaign',   color:'var(--accent-blue)'    },
-  pitch:      { icon:'🎯', label:'Pitch',       color:'var(--accent-violet)'  },
-  lead_score: { icon:'⭐', label:'Lead Score',  color:'var(--accent-emerald)' }
+  campaign:   { icon:'', label:'Campaign',   color:'var(--accent-blue)'    },
+  pitch:      { icon:'', label:'Pitch',       color:'var(--accent-violet)'  },
+  lead_score: { icon:'', label:'Lead Score',  color:'var(--accent-emerald)' },
+  image_banner: { icon:'', label:'Image Banner', color:'var(--accent-cyan)' },
+  video_ad: { icon:'', label:'Video Ad', color:'var(--accent-amber)' }
 };
 
 async function loadHistory() {
@@ -855,12 +1379,17 @@ async function loadHistory() {
     if (items.length === 0) { empty.style.display = 'block'; return; }
 
     items.forEach(item => {
-      const meta    = TOOL_META[item.tool] || { icon:'🤖', label:item.tool, color:'var(--text-muted)' };
+      const meta    = TOOL_META[item.tool] || { icon:'', label:item.tool, color:'var(--text-muted)' };
       const date    = new Date(item.created_at).toLocaleString();
       const inputSummary = Object.entries(item.input_data || {})
-        .map(([k,v]) => `<span class="hist-tag">${k}: ${String(v).substring(0,40)}${String(v).length>40?'…':''}</span>`)
+        .map(([k,v]) => `<span class="hist-tag">${k}: ${String(v).substring(0,40)}${String(v).length>40?'':''}</span>`)
         .join('');
-      const preview = (item.output || '').substring(0, 200) + ((item.output||'').length > 200 ? '…' : '');
+      const preview = (item.output || '').substring(0, 200) + ((item.output||'').length > 200 ? '' : '');
+      const mediaPreview = item.tool === 'image_banner'
+        ? `<img class="hist-media" src="${item.output}" alt="Generated banner" />`
+        : item.tool === 'video_ad'
+          ? `<video class="hist-media" src="${item.output}" controls playsinline></video>`
+          : '';
 
       const card = document.createElement('div');
       card.className = 'history-card';
@@ -872,14 +1401,15 @@ async function loadHistory() {
             <span class="hist-date">${date}</span>
           </div>
           <div style="display:flex;gap:6px;">
-            <button class="copy-btn" onclick="copyText(${JSON.stringify(item.output).replace(/"/g,'&quot;')})">📋 Copy</button>
-            <button class="copy-btn hist-del" onclick="deleteHistoryItem('${item.id}', this)">🗑️</button>
+            <button class="copy-btn" onclick="copyText(${JSON.stringify(item.output).replace(/"/g,'&quot;')})"> Copy</button>
+            <button class="copy-btn hist-del" onclick="deleteHistoryItem('${item.id}', this)"></button>
           </div>
         </div>
         <div class="hist-tags">${inputSummary}</div>
+        ${mediaPreview}
         <div class="hist-preview">${preview}</div>
         <div class="hist-full" style="display:none;">${item.output}</div>
-        <button class="hist-expand" onclick="toggleExpand(this)">Show full output ▼</button>
+        <button class="hist-expand" onclick="toggleExpand(this)">Show full output </button>
       `;
       list.appendChild(card);
     });
@@ -896,13 +1426,13 @@ function toggleExpand(btn) {
   const isOpen  = full.style.display !== 'none';
   preview.style.display = isOpen ? 'block' : 'none';
   full.style.display    = isOpen ? 'none'  : 'block';
-  btn.textContent       = isOpen ? 'Show full output ▼' : 'Collapse ▲';
+  btn.textContent       = isOpen ? 'Show full output ' : 'Collapse ';
 }
 
 function copyText(text) {
   navigator.clipboard.writeText(text)
     .then(() => showToast('Copied!'))
-    .catch(() => showToast('Copy failed', '⚠️'));
+    .catch(() => showToast('Copy failed', ''));
 }
 
 async function deleteHistoryItem(id, btn) {
@@ -917,7 +1447,7 @@ async function deleteHistoryItem(id, btn) {
     }
   } catch(e) {
     btn.disabled = false;
-    showToast('Delete failed', '⚠️');
+    showToast('Delete failed', '');
   }
 }
 
@@ -929,7 +1459,7 @@ async function clearAllHistory() {
     document.getElementById('history-empty').style.display = 'block';
     showToast('History cleared.');
   } catch(e) {
-    showToast('Clear failed', '⚠️');
+    showToast('Clear failed', '');
   }
 }
 
@@ -945,6 +1475,7 @@ document.addEventListener('click', e => {
    INIT
    ============================================================ */
 document.addEventListener('DOMContentLoaded', async () => {
+  initHeroGlobe();
   handleAuthRedirectStatus();
   await checkAuth();
 });
@@ -952,3 +1483,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 </body>
 </html>
+

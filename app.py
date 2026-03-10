@@ -8,6 +8,8 @@ from flask_cors import CORS
 import requests
 import re
 import os
+import uuid
+import time
 from functools import wraps
 from dotenv import load_dotenv
 from supabase_client import supabase, supabase_admin
@@ -18,10 +20,19 @@ app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", os.urandom(32))
 CORS(app, supports_credentials=True)
 
-# ── Groq Config ──────────────────────────────────────────────────────────────
+# ── Groq ──────────────────────────────────────────────────────────────
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_MODEL   = "llama-3.3-70b-versatile"
 GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions"
+
+# ── Stability AI ──────────────────────────────────────────────────
+STABILITY_API_KEY    = os.getenv("STABILITY_API_KEY", "")
+STABILITY_IMAGE_URL  = "https://api.stability.ai/v2beta/stable-image/generate/core"
+
+# ── PiAPI (Luma Dream Machine) ────────────────────────────────────
+PIAPI_API_KEY    = os.getenv("PIAPI_API_KEY", "")
+PIAPI_VIDEO_URL  = "https://api.piapi.ai/api/luma/v1/video"
+PIAPI_STATUS_URL = "https://api.piapi.ai/api/luma/v1/video/"
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -89,6 +100,138 @@ def save_history(user_id: str, tool: str, input_data: dict, output: str):
         }).execute()
     except Exception as e:
         app.logger.warning(f"Failed to save history for user {user_id}: {e}")
+
+
+def build_visual_prompt(brand_name: str, campaign_tone: str, platform: str) -> str:
+    """Use Groq to convert marketing settings into a production-ready visual prompt."""
+    prompt = f"""You are an ad creative director.
+
+Create a single high-quality text-to-image prompt for a marketing banner.
+
+Brand/Product name: {brand_name}
+Campaign tone: {campaign_tone}
+Platform: {platform}
+
+Requirements:
+- Output only the final prompt, no extra explanation
+- Keep it under 140 words
+- Include composition, subject, background, lighting, color palette, and ad style
+- Mention the platform context so the visual feels native to that platform
+- Avoid copyrighted logos and avoid unsafe content
+- Include "no text, no watermark" at the end
+"""
+    return call_groq(prompt).strip()
+
+
+def save_asset_locally(file_bytes: bytes, extension: str) -> str:
+    """Save generated binary output under static/generated and return relative URL path."""
+    gen_dir = os.path.join(app.static_folder, "generated")
+    os.makedirs(gen_dir, exist_ok=True)
+    filename = f"{uuid.uuid4().hex}.{extension}"
+    abs_path = os.path.join(gen_dir, filename)
+    with open(abs_path, "wb") as f:
+        f.write(file_bytes)
+    return f"/static/generated/{filename}"
+
+
+def save_asset_and_get_url(file_bytes: bytes, extension: str) -> str:
+    """Store generated file and return a URL, preferring Supabase public storage when possible."""
+    filename = f"{uuid.uuid4().hex}.{extension}"
+
+    # Preferred: public Supabase URL (works for third-party fetches like Luma keyframes).
+    try:
+        bucket = supabase_admin.storage.from_("creative-assets")
+        bucket.upload(
+            path=filename,
+            file=file_bytes,
+            file_options={"content-type": f"image/{extension}", "upsert": "true"}
+        )
+        public_data = bucket.get_public_url(filename)
+        if isinstance(public_data, dict):
+            url = public_data.get("publicUrl") or public_data.get("public_url")
+            if url:
+                return url
+        if isinstance(public_data, str) and public_data:
+            return public_data
+    except Exception as e:
+        app.logger.warning(f"Supabase storage upload failed, using local static fallback: {e}")
+
+    # Fallback: local static path.
+    return request.url_root.rstrip("/") + save_asset_locally(file_bytes, extension)
+
+
+def generate_stability_banner(prompt: str) -> bytes:
+    """Generate a banner image from Stability API and return raw bytes."""
+    if not STABILITY_API_KEY:
+        raise RuntimeError("STABILITY_API_KEY is not set.")
+
+    headers = {
+        "Authorization": f"Bearer {STABILITY_API_KEY}",
+        "Accept": "image/*"
+    }
+    files = {
+        "prompt": (None, prompt),
+        "aspect_ratio": (None, "16:9"),
+        "output_format": (None, "png")
+    }
+
+    response = requests.post(STABILITY_IMAGE_URL, headers=headers, files=files, timeout=60)
+    if response.status_code >= 400:
+        try:
+            err_json = response.json()
+        except Exception:
+            err_json = {"message": response.text[:400]}
+        raise RuntimeError(f"Stability API error ({response.status_code}): {err_json}")
+
+    return response.content
+
+
+def generate_piapi_video(prompt: str, image_url: str) -> str:
+    """Create a short ad video with PiAPI and return hosted video URL."""
+    if not PIAPI_API_KEY:
+        raise RuntimeError("PIAPI_API_KEY is not set.")
+
+    headers = {
+        "X-API-Key": PIAPI_API_KEY,
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "prompt": prompt,
+        "image_url": image_url,
+        "duration": 5,
+        "aspect_ratio": "16:9"
+    }
+
+    create_resp = requests.post(PIAPI_VIDEO_URL, json=payload, headers=headers, timeout=30)
+    if create_resp.status_code >= 400:
+        raise RuntimeError(f"PiAPI error ({create_resp.status_code}): {create_resp.text[:500]}")
+
+    create_data = create_resp.json()
+    task_id = create_data.get("task_id") or create_data.get("id")
+    if not task_id:
+        raise RuntimeError("PiAPI did not return a task_id.")
+
+    # Poll status until completion
+    for _ in range(40):
+        poll_url = f"{PIAPI_STATUS_URL}{task_id}"
+        poll_resp = requests.get(poll_url, headers=headers, timeout=20)
+        if poll_resp.status_code >= 400:
+            raise RuntimeError(f"PiAPI status check failed ({poll_resp.status_code}): {poll_resp.text[:500]}")
+
+        data = poll_resp.json()
+        state = (data.get("state") or data.get("status") or "").lower()
+        if state in {"completed", "succeeded", "success", "done"}:
+            video_url = data.get("video_url") or data.get("url")
+            if not video_url:
+                raise RuntimeError("PiAPI generation completed but no video URL was returned.")
+            return video_url
+
+        if state in {"failed", "error", "rejected", "canceled", "cancelled"}:
+            raise RuntimeError(f"PiAPI generation failed: {data}")
+
+        time.sleep(3)
+
+    raise RuntimeError("PiAPI generation timed out. Please try again.")
 
 
 
@@ -551,6 +694,99 @@ Be specific and data-driven."""
         output=output
     )
     return jsonify({"result": output})
+
+
+@app.route("/generate_image", methods=["POST"])
+@login_required
+def generate_image():
+    brand_name = request.form.get("brand_name", "").strip()
+    campaign_tone = request.form.get("campaign_tone", "").strip()
+    platform = request.form.get("platform", "").strip()
+
+    if not brand_name or not campaign_tone or not platform:
+        return jsonify({"error": "Please fill in brand/product name, campaign tone, and platform."}), 400
+
+    visual_prompt = build_visual_prompt(brand_name, campaign_tone, platform)
+    if visual_prompt.lower().startswith("error:") or visual_prompt.lower().startswith("api error"):
+        return jsonify({"error": visual_prompt}), 500
+
+    try:
+        image_bytes = generate_stability_banner(visual_prompt)
+        image_url = save_asset_and_get_url(image_bytes, "png")
+
+        save_history(
+            user_id=request.current_user.id,
+            tool="image_banner",
+            input_data={
+                "brand_name": brand_name,
+                "campaign_tone": campaign_tone,
+                "platform": platform,
+                "visual_prompt": visual_prompt
+            },
+            output=image_url
+        )
+        return jsonify({
+            "result": "Image banner generated.",
+            "prompt": visual_prompt,
+            "image_url": image_url
+        })
+    except Exception as e:
+        app.logger.error(f"Image generation failed: {e}")
+        return jsonify({"error": f"Image generation failed: {str(e)}"}), 500
+
+
+@app.route("/generate_video", methods=["POST"])
+@login_required
+def generate_video():
+    brand_name = request.form.get("brand_name", "").strip()
+    campaign_tone = request.form.get("campaign_tone", "").strip()
+    platform = request.form.get("platform", "").strip()
+    image_url = request.form.get("image_url", "").strip()
+    visual_prompt = request.form.get("visual_prompt", "").strip()
+
+    if not brand_name or not campaign_tone or not platform:
+        return jsonify({"error": "Please fill in brand/product name, campaign tone, and platform."}), 400
+
+    try:
+        if not visual_prompt:
+            visual_prompt = build_visual_prompt(brand_name, campaign_tone, platform)
+            if visual_prompt.lower().startswith("error:") or visual_prompt.lower().startswith("api error"):
+                return jsonify({"error": visual_prompt}), 500
+
+        # If user did not pass an image URL, generate one first.
+        if not image_url:
+            image_bytes = generate_stability_banner(visual_prompt)
+            image_url = save_asset_and_get_url(image_bytes, "png")
+
+        video_prompt = (
+            f"Create a cinematic 5-second {platform} ad video for {brand_name}. "
+            f"Tone: {campaign_tone}. Keep motion natural, product-focused, and conversion-oriented."
+        )
+        video_url = generate_piapi_video(video_prompt, image_url)
+
+        save_history(
+            user_id=request.current_user.id,
+            tool="video_ad",
+            input_data={
+                "brand_name": brand_name,
+                "campaign_tone": campaign_tone,
+                "platform": platform,
+                "visual_prompt": visual_prompt,
+                "image_url": image_url,
+                "video_prompt": video_prompt
+            },
+            output=video_url
+        )
+
+        return jsonify({
+            "result": "Video ad generated.",
+            "prompt": visual_prompt,
+            "image_url": image_url,
+            "video_url": video_url
+        })
+    except Exception as e:
+        app.logger.error(f"Video generation failed: {e}")
+        return jsonify({"error": f"Video generation failed: {str(e)}"}), 500
 
 
 # ══════════════════════════════════════════════════════════════════════════════

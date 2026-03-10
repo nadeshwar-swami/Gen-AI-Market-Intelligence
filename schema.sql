@@ -37,11 +37,17 @@ CREATE TRIGGER on_auth_user_created
 CREATE TABLE IF NOT EXISTS public.history (
   id          UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id     UUID        NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-  tool        TEXT        NOT NULL CHECK (tool IN ('campaign', 'pitch', 'lead_score')),
+  tool        TEXT        NOT NULL CHECK (tool IN ('campaign', 'pitch', 'lead_score', 'image_banner', 'video_ad')),
   input_data  JSONB       NOT NULL DEFAULT '{}',
   output      TEXT        NOT NULL,
   created_at  TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Keep existing environments in sync when this file is re-run.
+ALTER TABLE public.history DROP CONSTRAINT IF EXISTS history_tool_check;
+ALTER TABLE public.history
+  ADD CONSTRAINT history_tool_check
+  CHECK (tool IN ('campaign', 'pitch', 'lead_score', 'image_banner', 'video_ad'));
 
 -- Index for fast per-user queries
 CREATE INDEX IF NOT EXISTS history_user_id_idx ON public.history (user_id, created_at DESC);
